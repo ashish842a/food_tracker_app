@@ -44,27 +44,31 @@ export default function AddFoodDialog({ onAdded, editEntry, onEdit, open, onOpen
     if (!user || !foodName.trim()) return;
 
     if (editEntry && onEdit) {
-      const updated = updateEntry(editEntry.id, user.id, {
+      updateEntry(editEntry.id, {
         foodName: foodName.trim(),
         quantity: quantity.trim(),
         price: price ? parseFloat(price) : null,
         mealType,
         date,
+      }).then(updated => {
+        if (updated) onEdit(updated);
+        resetForm();
+        setIsOpen(false);
       });
-      if (updated) onEdit(updated);
     } else {
-      const entry = addEntry({
+      addEntry({
         userId: user.id,
         foodName: foodName.trim(),
         quantity: quantity.trim(),
         price: price ? parseFloat(price) : null,
         mealType,
         date,
+      }).then(entry => {
+        if (entry) onAdded(entry);
+        resetForm();
+        setIsOpen(false);
       });
-      onAdded(entry);
     }
-    resetForm();
-    setIsOpen(false);
   };
 
   return (

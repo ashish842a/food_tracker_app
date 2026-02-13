@@ -35,6 +35,22 @@ router.get("/", authMiddleware, async (req, res) => {
 });
 
 
+// ✅ FILTER BY DATE
+router.get("/date/:date", authMiddleware, async (req, res) => {
+  try {
+    const entries = await FoodEntry.find({
+      userId: req.user.id,
+      date: req.params.date,
+    });
+
+    res.json(entries);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 // ✅ UPDATE ENTRY
 router.put("/:id", authMiddleware, async (req, res) => {
   try {
@@ -69,22 +85,6 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     }
 
     res.json({ success: true });
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-
-// ✅ FILTER BY DATE
-router.get("/date/:date", authMiddleware, async (req, res) => {
-  try {
-    const entries = await FoodEntry.find({
-      userId: req.user.id,
-      date: req.params.date,
-    });
-
-    res.json(entries);
 
   } catch (err) {
     res.status(500).json({ error: err.message });

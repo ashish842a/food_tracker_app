@@ -16,6 +16,14 @@ const foodEntrySchema = new mongoose.Schema({
   },
   date: { type: String, required: true }, // YYYY-MM-DD
   createdAt: { type: Date, default: Date.now },
+}, {
+  toJSON: {
+    virtuals: true,
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      return ret;
+    }
+  }
 });
 
 module.exports = mongoose.model("FoodEntry", foodEntrySchema);

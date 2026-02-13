@@ -379,6 +379,7 @@ const Dashboard = () => {
                               <TableHead>Food</TableHead>
                               <TableHead>Meal</TableHead>
                               <TableHead>Price</TableHead>
+                              <TableHead className="w-20">Actions</TableHead>
                             </TableRow>
                           </TableHeader>
                           <TableBody>
@@ -388,6 +389,12 @@ const Dashboard = () => {
                                 <TableCell className="font-medium">{e.foodName}</TableCell>
                                 <TableCell>{e.mealType}</TableCell>
                                 <TableCell>{e.price !== null ? `₹${e.price}` : "—"}</TableCell>
+                                <TableCell>
+                                  <div className="flex gap-1">
+                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEdit(e)}><Pencil className="h-3.5 w-3.5" /></Button>
+                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(e.id)}><Trash2 className="h-3.5 w-3.5" /></Button>
+                                  </div>
+                                </TableCell>
                               </TableRow>
                             ))}
                           </TableBody>
